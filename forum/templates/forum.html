@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+    {% if user.is_authenticated %}
+        <div class="pull-right">
+        <p>
+            <a class="btn btn-default rigth" href=
+            "{% url 'new_thread' 1 %}">Adicione um novo tópico</a>
+        </p>
+        </div>
+    {% endif %}
+    <table class="table">
+      <thead>
+          <tr>
+              <th>Tópicos</th>
+              <th>Replies</th>
+              <th>Último post</th>
+              <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for thread in threads_list %}
+        <tr {% if forloop.last %}class="last"{% endif %}>
+            <td>
+                <div class="title"><a href="{% url 'list_post' thread.pk %}">{{ thread.title }}</a></div>
+            </td>
+            <td>{{ thread.num_replies }}</td>
+            <td>{{ thread.last_post.short|linebreaksbr }}</td>
+            <td><a class="btn btn-default" href="{% url 'list_post' thread.pk %}">Ver</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan='4' class="text-center">Nenhuma thread cadastrada!</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

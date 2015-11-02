@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load forum_extras %}
+{% block conteudo %}
+    {% if form.errors %}
+        <div class="alert alert-danger text-center">
+            Corrija o{{ form.errors|pluralize }} erro{{ form.errors|pluralize }} abaixo.
+        </div>
+    {% endif %}
+    <div class="blog-header">
+        <form role="form" class="form-horizontal" action="/login/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2 class="text-center">Login</h2>
+            <div class="form">
+            {% for field in form %}
+            <div class="form-group">
+              {{field.label_tag|addclass:"col-sm-2 control-label"}}
+              <div class="col-sm-10">
+                  {{field|addclass:"form-control"}}
+                  <span class="help-block">{{field.errors.as_text}}</span>
+              </div>
+            </div>
+            {% endfor %}
+            <div class="col-md-offset-2 lead">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

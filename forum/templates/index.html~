@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+    <table class="table">
+      <thead>
+          <tr>
+              <th></th>
+              <th>Posts</th>
+              <th>Último post</th>
+              <th></th>
+          </tr>
+        </thead>
+        <!-- List of forums { url 'forum' dpk=forum.pk %} -->
+        <tbody>
+        {% for forum in forum_list %}
+        <tr {% if forloop.last %}class="last"{% endif %}>
+            <td>
+                <div class="title"><a href="{% url 'list_thread' forum.pk %}">{{ forum.title }}</a></div>
+            </td>
+            <td>{{ forum.num_posts }}</td>
+            <td>{{ forum.last_post.short|linebreaksbr }}</td>
+            <td><a class="btn btn-default" href="{% url 'list_thread' forum.pk %}">Ver</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan='4' class="text-center">Nenhum forum cadastrado!</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

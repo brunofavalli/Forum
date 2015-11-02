@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block titulo %}Forum{% endblock %}</title>
+    {% block style %}
+        <link rel="stylesheet" type="text/css" href="/media/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/media/css/blog.css"/>
+    {% endblock style %}
+
+    {% block scripts %}
+        <script src="/media/js/jquery-2.1.0.min.js"></script>
+        <script src="/media/js/bootstrap.min.js"></script>
+    {% endblock scripts %}
+</head>
+
+<body>
+    {% block menu %}
+    <div class="blog-masthead" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <nav class="blog-nav">
+            <a class="blog-nav-item" href="/">Forum</a>
+          </nav>
+        </div>
+        <div class="blog-nav">
+          <nav class="blog-nav navbar-right">
+            {% if user.is_staff %} <a href="{% url 'admin:index' %}" class="blog-nav-item">Admin</a> {% endif %}
+            {% if user.is_authenticated %}
+                <a class="blog-nav-item" href="{% url 'profile' user.profile.pk %}">Editar Perfil</a>
+                <a class="blog-nav-item" href="/logout/">Logout</a>
+            {% else %}
+                <a class="blog-nav-item" href="/login/">Login</a>
+                <a class="blog-nav-item" href="/register/">Registrar</a>
+            {% endif %}
+          </nav>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% endblock %}
+    <div class="container">
+      <div class="row">
+          {% block conteudo %}{% endblock %}
+      </div>
+    </div>
+    <div class="blog-footer">
+      <p>Direitos reservados a Treinaweb ©.</p>
+      <p>
+        <a href="#">Voltar ao topo</a>
+      </p>
+    </div>
+  </body>
+</html>
